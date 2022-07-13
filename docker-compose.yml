@@ -1,0 +1,134 @@
+version: "3.9"
+
+x-services-volume: &services-volume
+  type: bind
+  source: ./src
+  target: /var/www
+
+volumes:
+  database:
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: "./docker/nginx/Dockerfile"
+      args:
+        - ENVIRONMENT=${ENVIRONMENT}
+        - GENERATE_SELF_SIGNED_SSL=${GENERATE_SELF_SIGNED_SSL}
+    image: ${PROJECT_NAME}_nginx:${ENVIRONMENT}
+    container_name: ${PROJECT_NAME}_nginx
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      TZ: ${TIMEZONE}
+    links:
+      - node:app
+      - mysql:mysql
+      - php:php
+      - mailhog:mailhog
+    volumes:
+      - *services-volume
+
+  php:
+    build:
+      context: .
+      dockerfile: "./docker/php/Dockerfile"
+      args:
+        - OPCACHE_VALIDATE_TIMESTAMPS=${OPCACHE_VALIDATE_TIMESTAMPS}
+        - ENABLE_XDEBUG=${ENABLE_XDEBUG}
+    image: ${PROJECT_NAME}_php:${ENVIRONMENT}
+    container_name: ${PROJECT_NAME}_php
+    volumes:
+      - *services-volume
+      - .git:/var/www/backend/.git
+    working_dir: /var/www/backend
+    ports:
+      - "9000:9000"
+    environment:
+      TZ: ${TIMEZONE}
+      XDEBUG_CONFIG: "remote_host=10.0.2.2"
+    links:
+      - mysql:mysql
+      - redis:redis
+
+  mysql:
+    build:
+      context: .
+      dockerfile: "./docker/mysql/Dockerfile"
+    image: ${PROJECT_NAME}_mysql:${ENVIRONMENT}
+    command:
+      [
+        "--character-set-server=utf8",
+        "--collation-server=utf8_unicode_ci",
+        "--default-authentication-plugin=mysql_native_password",
+      ]
+    container_name: ${PROJECT_NAME}_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TIMEZONE}
+    volumes:
+      - ./docker/mysql/scripts:/docker-entrypoint-initdb.d
+      - database:/var/lib/mysql
+
+  cron:
+    build:
+      context: .
+      dockerfile: "./docker/cron/Dockerfile"
+    image: ${PROJECT_NAME}_cron:${ENVIRONMENT}
+    container_name: ${PROJECT_NAME}_cron
+    volumes:
+      - *services-volume
+    working_dir: /var/www/backend
+    environment:
+      TZ: ${TIMEZONE}
+    links:
+      - redis:redis
+
+  node:
+    build:
+      context: .
+      dockerfile: "./docker/node/${ENVIRONMENT}.Dockerfile"
+    image: ${PROJECT_NAME}_node:${ENVIRONMENT}
+    container_name: ${PROJECT_NAME}_node
+    working_dir: /var/www/frontend
+    volumes:
+      - "/var/www/frontend/node_modules"
+      - *services-volume
+    environment:
+      - NODE_ENV=${ENVIRONMENT}
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    ports:
+      - "3000:3000"
+
+  fixer:
+    build:
+      context: .
+      dockerfile: "./docker/fixer/Dockerfile"
+    container_name: ${PROJECT_NAME}_fixer
+    volumes:
+      - *services-volume
+    working_dir: /var/www/backend
+
+  redis:
+    build:
+      context: .
+      dockerfile: "./docker/redis/Dockerfile"
+    image: ${PROJECT_NAME}_redis:${ENVIRONMENT}
+    container_name: ${PROJECT_NAME}_redis
+    ports:
+      - "6379:6379"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ${PROJECT_NAME}_mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025

@@ -1,0 +1,4 @@
+#!/bin/bash
+touch src/backend/.php-cs-fixer.cache
+docker-compose run --rm fixer fix --config .php_cs.dist.php -v "$@"
+rm src/backend/.php-cs-fixer.cache

@@ -35,7 +35,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required field!',
-            'name.required' => 'Email is required field!',
+            'email.required' => 'Email is required field!',
             'password.required' => 'Password is required!',
             'c_password.required' => 'Password and confirm password must be same!'
         ];

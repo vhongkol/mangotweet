@@ -1,47 +1,25 @@
 <?php
 
-
-
 namespace App\Helper;
-
-
 
 use Symfony\Component\HttpFoundation\Response;
 
-
-
-Trait HasApiResponse
-
+Trait HasApiResponse 
 {
-
     /**
-
      * success response method.
-
      *
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function httpCreated($result, $message)
-
     {
-
-        $response = [
-
+    	$response = [
             'success' => true,
-
             'data'    => $result,
-
             'message' => $message,
-
         ];
 
-
-
         return response()->json($response, Response::HTTP_CREATED);
-
     }
 
     /**
@@ -64,151 +42,58 @@ Trait HasApiResponse
         return response()->json($response, Response::HTTP_BAD_REQUEST);
     }
 
-
     /**
-
      * return error response.
-
      *
-
      * @return \Illuminate\Http\Response
-
      */
-
-    public function httpBadRequestError($error, $errorMessages = [])
-
-    {
-
-        $response = [
-
-            'success' => false,
-
-            'message' => $error,
-
-        ];
-
-
-
-
-        if(!empty($errorMessages)){
-
-            $response['data'] = $errorMessages;
-
-        }
-
-
-
-        return response()->json($response, Response::HTTP_BAD_REQUEST);
-
-    }
-
-
-
-    /**
-
-     * return error response.
-
-     *
-
-     * @return \Illuminate\Http\Response
-
-     */
-
     public function httpNotFoundError($error, $errorMessages = [])
-
     {
-
-        $response = [
-
+    	$response = [
             'success' => false,
-
             'message' => $error,
-
         ];
 
 
-
-
         if(!empty($errorMessages)){
-
             $response['data'] = $errorMessages;
-
         }
-
-
 
         return response()->json($response, Response::HTTP_NOT_FOUND);
-
     }
-
-
 
     /**
-
      * return error response.
-
      *
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function httpUnauthorizedError($error, $errorMessages = [])
-
     {
-
-        $response = [
-
+    	$response = [
             'success' => false,
-
             'message' => $error,
-
         ];
-
-
 
         if(!empty($errorMessages)) {
-
             $response['data'] = $errorMessages;
-
         }
 
-
-
         return response()->json($response, Response::HTTP_UNAUTHORIZED);
-
     }
-
-
 
      /**
-
      * return error response.
-
      *
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function httpSuccess($result, $message)
-
     {
-
-        $response = [
-
+    	$response = [
             'success' => true,
-
             'data'    => $result,
-
             'message' => $message,
-
         ];
 
-
-
         return response()->json($response, Response::HTTP_OK);
-
     }
-
 }

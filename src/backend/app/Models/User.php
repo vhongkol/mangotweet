@@ -32,6 +32,7 @@ class User extends Authenticatable
 
     public function saveUser($request) : self
     {   
+     
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);

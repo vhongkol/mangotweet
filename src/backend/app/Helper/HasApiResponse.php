@@ -44,6 +44,25 @@ Trait HasApiResponse
 
     }
 
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function httpBadRequestError($error, $errorMessages = [])
+    {
+    	$response = [
+            'success' => false,
+            'message' => $error,
+        ];
+
+
+        if(!empty($errorMessages)){
+            $response['data'] = $errorMessages;
+        }
+
+        return response()->json($response, Response::HTTP_BAD_REQUEST);
+    }
 
 
     /**

@@ -1,22 +1,64 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import axios from 'axios';
+
 // import bootstrap from "bootstrap";
 
 const SignIn = () => {
     const navigate = useNavigate();
-    const [email, setemail] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
     const onSignIn = async (e) => {
-        navigate("/");
+    
+
+       
+        
+        console.log("send this data");
+        console.log(email);
+        console.log(password);
+        //get all the data 
+        //axios for sending data to the server 
+        ///http://localhost/api/v1/login
+       let URL = "http://localhost/api/v1/login";
+      const response = await axios.post('http://localhost/api/v1/login',  {
+        email: email,
+        password: password,
+      }, {})
+        .then(function(Response) {
+            console.log(Response.data)
+        })
+        .catch(function(error) {
+            console.log(error.response.data.data.error)
+        });
+
+
+       // navigate("/");
+
     };
     const handleChange = async (e) => {};
     const onSignUp = () => {
         navigate("/sign-up");
     };
+    
+    
 
-    return (
-        <div className="container-md">
+   const onEmailChange = async (e) => {
+        console.log(e.target.value);
+        setEmail(e.target.value);
+      };
+
+ const onPasswordChange = async (e) => {
+        console.log(e.target.value);
+        setPassword(e.target.value);
+      };
+     
+     
+     
+     return (
+       <div className="container-md">
             <div className="row m-3 justify-content-center">
-                <h1 className="text-center my-5">Welcome to PostIT</h1>
+                <h1 className="text-center my-5">SIGN IN</h1>
             </div>
             <div className="row m-3 justify-content-center">
                 <div className="col-sm-6">
@@ -26,8 +68,9 @@ const SignIn = () => {
                             className="form-control"
                             id="floatingInput"
                             placeholder="Email address"
+                            onChange={onEmailChange} required
                         />
-                        <label for="floatingInput">Email address</label>
+                        <label for="floatingInput">Email Address</label>
                     </div>
                     <div className="form-floating mb-3">
                         <input
@@ -35,6 +78,8 @@ const SignIn = () => {
                             className="form-control"
                             id="floatingPassword"
                             placeholder="Password"
+                            onChange={onPasswordChange} required
+                         
                         />
                         <label for="floatingPassword">Password</label>
                     </div>
@@ -44,9 +89,10 @@ const SignIn = () => {
                             onClick={onSignIn}
                             className="btn btn-primary"
                             value="Login"
+                          
                         />
                     </div>
-                    <div>
+                    <div className="sign-up">
                         <label>Don't have Account?</label>{" "}
                         <label
                             type="button"
@@ -59,7 +105,9 @@ const SignIn = () => {
                 </div>
             </div>
         </div>
+        
     );
+     
 };
 
 export default SignIn;

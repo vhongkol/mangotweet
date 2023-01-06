@@ -1,13 +1,93 @@
-body {
-  margin: 0;
+html, body {
+  margin:auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(black,#434343);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color:rgb(252, 255, 255);
+ 
 }
 
+.App{
+
+  border:3px solid #ffffff;
+  width:30%;
+  height: 70%;
+  margin:auto;
+  margin-top: 100px;
+  background-image: linear-gradient(#09203f , #537895);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+
+  
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
+.btn{
+width: 70%;
+text-align: center;
+margin:auto;
+border-radius: 50px;
+}
+
+
+h1{
+  
+  font:100%;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-variant: small-caps;
+  color:rgb(254, 255, 255);
+  
+}
+
+.sign-up{
+  text-align: center;
+}
+
+
+.radio{
+  margin: auto;
+  display: inline-block;
+}
+
+
+.form-floating{
+  color: black;
+  
+  
+}
+
+
+.form-control{
+  background-color: antiquewhite;
+  border-radius: 50px;
+}
+
+
+.text-decoration-underline:hover {
+ color: aqua;
+}
+
+

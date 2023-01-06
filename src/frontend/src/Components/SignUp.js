@@ -10,6 +10,8 @@ const SignUp = () => {
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
 
+
+
     const onCreate = async (e) => {
         if (
             email != "" &&
@@ -18,6 +20,7 @@ const SignUp = () => {
             confirmPass != "" &&
             fname != "" &&
             lname != ""
+            
         ) {
             // navigate("/sign-in");
             alert("success");
@@ -32,16 +35,16 @@ const SignUp = () => {
     return (
         <div className="container-md">
             <div className="row m-3 justify-content-center">
-                <h1 className="text-center my-5">Welcome to PostIT</h1>
+                <h1 className="text-center my-5">SIGN UP</h1>
             </div>
             <div className="row m-3 justify-content-center">
                 <div className="col-sm-6">
                     <div className=" mb-3">
-                        <label>Email address</label>
+                        <label>Email Address</label>
                         <input
                             type="email"
                             className="form-control"
-                            placeholder="e.g. example@email.com"
+                            placeholder="Your@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -91,7 +94,11 @@ const SignUp = () => {
                             value={lname}
                             onChange={(e) => setLname(e.target.value)}
                         />
-                    </div>
+
+                       
+
+                    </div><center>
+                    <div className="radio">
                     <div class="form-check form-check-inline">
                         <input
                             class="form-check-input"
@@ -116,6 +123,7 @@ const SignUp = () => {
                             Female
                         </label>
                     </div>
+                    </div></center>
                     <div className="row mb-3 px-3">
                         <input
                             type="submit"
@@ -125,7 +133,7 @@ const SignUp = () => {
                             id="female"
                         />
                     </div>
-                    <div>
+                    <div className="sign-up">
                         <label>Already have an Account?</label>{" "}
                         <label
                             type="button"

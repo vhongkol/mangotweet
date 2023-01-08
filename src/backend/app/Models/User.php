@@ -30,6 +30,10 @@ class User extends Authenticatable
         return $this->hasMany('\AppModels\OauthAccessToken');
     }
 
+    public static function authToken() {
+        
+    }
+
     public function saveUser($request) : self
     {   
      

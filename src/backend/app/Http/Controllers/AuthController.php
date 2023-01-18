@@ -15,19 +15,18 @@ class AuthController extends Controller
     
     public function register(Request $request, User $user)
     {
-        $rules = [
-            'name' => 'required|string|max:50',
+        $rules = [    
+            'username' => 'required|alpha_num',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'address' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ];
         
         $messages = [
-            'name.required' => 'Name is required field!',
-            'name.string' => 'Name must be string!',
+            'username.required' => 'First name is required field!',
+            'username.alpha_num' => 'Username nimo jade!',
 
             'first_name.required' => 'First name is required field!',
             'first_name.string' => 'First name must be string!',
@@ -72,6 +71,11 @@ class AuthController extends Controller
             return $this->httpSuccess($user, 'User login successfully.');
         } 
         return $this->httpUnauthorizedError('Unauthorised.', ['error'=>'Username or email is not matched in our records!']);
+    }
+
+    public function user() 
+    {
+        return Auth::user();
     }
 
     public function logout(User $user)

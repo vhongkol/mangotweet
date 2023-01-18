@@ -20,8 +20,8 @@ Route::post('reset', [ForgotPassController::class, 'reset']);
 
 
 Route::group(['middleware' => ['auth:api']], function () {
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('logout', [AuthController::class, 'logout']);
     Route::get('homepage', [HomeController::class, 'index']);
 
-    Route::get('user',[AuthController::class,'user']);
+    Route::get('profile',[AuthController::class,'profile']);
 });

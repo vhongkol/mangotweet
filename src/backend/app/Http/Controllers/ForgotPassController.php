@@ -62,7 +62,7 @@ class ForgotPassController extends Controller
         if (strcmp($otp->token, $req->otp) != 0) {
 
             return response([
-                'message' => 'BONG ERRORS NOT SAME TOKEN'
+                'message' => 'Invalid Token!'
             ], 400);
         }
 

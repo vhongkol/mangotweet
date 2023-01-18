@@ -32,10 +32,7 @@ class AuthController extends Controller
             'first_name.string' => 'First name must be string!',
 
             'last_name.require' => 'Last name is required field!',
-            'last_name.string' => 'Last name must be string!',
-
-            'address' => 'Address is required field!',
-            'address.string' => 'Address must be string!',
+            'last_name.string' => 'Last name must be string!', 
 
             'email.required' => 'Email is required field!',
             'email.email' => 'Email is Invalid!',
@@ -70,17 +67,19 @@ class AuthController extends Controller
             $user['token'] =  Auth::user()->createToken('myApp')->accessToken; 
             return $this->httpSuccess($user, 'User login successfully.');
         } 
-        return $this->httpUnauthorizedError('Unauthorised.', ['error'=>'Username or email is not matched in our records!']);
+        return $this->httpUnauthorizedError('Unauthorised', ['error'=>'Username or email is not matched in our records!']);
     }
 
-    public function user() 
-    {
-        return Auth::user();
+    public function profile(Request $request) {
+        $user = $request->json();
+        if ($user) {
+            return response()->json([
+                'Success' => 'User Profile'
+            ], 200);
+        }
     }
 
-    public function logout(User $user)
-    {
-
+    public function logout(User $user) {
         $user->logout();
 
         return response()->json(['Success' => 'Logged out'], 200);

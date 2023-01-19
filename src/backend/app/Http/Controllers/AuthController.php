@@ -25,23 +25,21 @@ class AuthController extends Controller
         ];
         
         $messages = [
-            'username.required' => 'First name is required field!',
-            'username.alpha_num' => 'Username nimo jade!',
+            'username.required' => 'Username is required!',
+            'username.alpha_num' => 'Username is invalid!',
 
-            'first_name.required' => 'First name is required field!',
+            'first_name.required' => 'First name is required!',
             'first_name.string' => 'First name must be string!',
 
-            'last_name.require' => 'Last name is required field!',
+            'last_name.require' => 'Last name is required!',
             'last_name.string' => 'Last name must be string!', 
 
             'email.required' => 'Email is required field!',
             'email.email' => 'Email is Invalid!',
-            'email.unique:users' => 'Email is required field!',
+            'email.unique:users' => 'Email is required!',
 
             'password' => 'Password is required!',
-            
-            'confirm_password.required' => 'Password is required!',
-            'confirm_password.same:password' => 'Password and confirm password must match!',
+            'confirm_password.same:password' => 'Repeat password!',
         ];
 
         $validation = Validator::make($request->all(), $rules, $messages);

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPassController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 //Register routes
@@ -22,6 +23,5 @@ Route::post('reset', [ForgotPassController::class, 'reset']);
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('homepage', [HomeController::class, 'index']);
-
-    Route::get('profile',[AuthController::class,'profile']);
-});
+    Route::get('profile',[ProfileController::class,'profile']);
+}); 

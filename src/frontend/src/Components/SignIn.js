@@ -5,10 +5,19 @@ import axios from 'axios';
 
 // import bootstrap from "bootstrap";
 
+
+
 const SignIn = () => {
+    
+    
     const navigate = useNavigate();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    
+    
+     
+
+        
     const onSignIn = async (e) => {
     
 
@@ -24,13 +33,18 @@ const SignIn = () => {
       const response = await axios.post('http://localhost/api/v1/login',  {
         email: email,
         password: password,
+
       }, {})
         .then(function(Response) {
             console.log(Response.data)
+            navigate('/Dashboard');
         })
         .catch(function(error) {
-            console.log(error.response.data.data.error)
+            // console.log(error.response.data.data.error)
+            console.log(error)
         });
+
+        
 
 
        // navigate("/");
@@ -39,9 +53,9 @@ const SignIn = () => {
     const handleChange = async (e) => {};
     const onSignUp = () => {
         navigate("/sign-up");
+      
+   
     };
-    
-    
 
    const onEmailChange = async (e) => {
         console.log(e.target.value);
@@ -53,12 +67,15 @@ const SignIn = () => {
         setPassword(e.target.value);
       };
      
+
      
-     
+ 
      return (
+       
        <div className="container-md">
             <div className="row m-3 justify-content-center">
                 <h1 className="text-center my-5">SIGN IN</h1>
+                
             </div>
             <div className="row m-3 justify-content-center">
                 <div className="col-sm-6">
@@ -67,28 +84,32 @@ const SignIn = () => {
                             type="email"
                             className="form-control"
                             id="floatingInput"
-                            placeholder="Email address"
-                            onChange={onEmailChange} required
+                            placeholder="Email address" 
+                            onChange={onEmailChange} required 
                         />
                         <label for="floatingInput">Email Address</label>
                     </div>
                     <div className="form-floating mb-3">
+                        
                         <input
                             type="password"
                             className="form-control"
                             id="floatingPassword"
-                            placeholder="Password"
+                            placeholder="Password" 
                             onChange={onPasswordChange} required
                          
                         />
                         <label for="floatingPassword">Password</label>
                     </div>
+                    
+                    
                     <div className="row mb-3 px-3">
-                        <input
+                        <input 
                             type="submit"
                             onClick={onSignIn}
                             className="btn btn-primary"
-                            value="Login"
+                             value="Login"
+                           
                           
                         />
                     </div>
@@ -101,11 +122,20 @@ const SignIn = () => {
                         >
                             Sign Up
                         </label>
+
+                        <div className="forgot-password">
+                        <label
+                            type="button"
+                            className="text-decoration-underline"
+                            onClick={"onForgotPassword"}>
+                            Forgot Password
+                        </label>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+       
     );
      
 };

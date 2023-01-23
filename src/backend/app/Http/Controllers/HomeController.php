@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return response()->json(['Success' => ''], 200);
+        return response()->json(['Success' => 'Wecome!'], 200);
         return $this->httpUnauthorizedError('Unauthorised.', ['error'=>'Unathenticated!']);
     }
 

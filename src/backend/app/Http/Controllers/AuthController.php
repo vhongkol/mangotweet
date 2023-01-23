@@ -68,15 +68,6 @@ class AuthController extends Controller
         return $this->httpUnauthorizedError('Unauthorised', ['error'=>'Username or email is not matched in our records!']);
     }
 
-    public function profile(Request $request) {
-        $user = $request->json();
-        if ($user) {
-            return response()->json([
-                'Success' => 'User Profile'
-            ], 200);
-        }
-    }
-
     public function logout(User $user) {
         $user->logout();
 

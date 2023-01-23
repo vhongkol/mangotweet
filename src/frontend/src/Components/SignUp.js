@@ -41,7 +41,7 @@ const SignUp =  () => {
        
         }, {}).then(function(Response) {
             console.log( Response.data)
-         navigate('/sign-up');
+         navigate('/sign-in');
         })
         .catch(function(error) {
             console.log( error)
@@ -189,7 +189,7 @@ const SignUp =  () => {
 
                        
 
-</div><center>
+                   </div><center>
                     <div className="radio">
                     <div class="form-check form-check-inline">
                         <input
@@ -229,13 +229,7 @@ const SignUp =  () => {
                     </div></center>
                     <div className="sign-in">
                         
-                        <label
-                            type="button"
-                            className="text-decoration-underline"
-                            onClick={onSignIn}
-                        >
-                           Sign In 
-                        </label>
+                        
                         </div>
                         </div>
                     </div>

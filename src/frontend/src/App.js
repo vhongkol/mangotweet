@@ -5,7 +5,6 @@ import ForgotPassword from "./Components/ForgotPassword";
 import Home from "./Components/Home";
 import Dashboard from "./Components/Dashboard";
 import ResetPassword from "./Components/ResetPassword";
-import ImageUpload from "./ImageUpload/ImageUpload";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -43,10 +42,7 @@ function App() {
                         path="/reset-password"
                         element={<ResetPassword />}
                     />
-                    <Route
-                        path="/image-upload"
-                        element={<ImageUpload />}
-                    />
+                    
                 </Routes>
             </Router>
         </div>

@@ -1,48 +1,93 @@
-
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-
 
 function Home() {
-
     const navigate = useNavigate();
-    const onSignIn = async (e) => {
-        navigate("/sign-in");   
+    const [posts, setPosts] = useState([]);
+    const [newPost, setNewPost] = useState("");
+    const [newComment, setNewComment] = useState("");
+    const [newImage, setNewImage] = useState(null);
+
+    const handlePost = (e) => {
+        e.preventDefault();
+        setPosts([
+            ...posts,
+            { post: newPost, comments: [], likes: 0, image: newImage },
+        ]);
+        setNewPost("");
+        setNewImage(null);
     };
-    let URL = "http://localhost/api/v1/logout";
-    const response =  axios.post('http://localhost/api/v1/logout', )
+
+    const handleComment = (e, post) => {
+        e.preventDefault();
+        setPosts(
+            posts.map((p) => {
+                if (p === post) {
+                    p.comments = [...p.comments, newComment];
+                }
+                return p;
+            })
+        );
+        setNewComment("");
+    };
+
+    const handleLike = (post) => {
+        setPosts(
+            posts.map((p) => {
+                if (p === post) {
+                    p.likes++;
+                }
+                return p;
+            })
+        );
+    };
+
+    const handleImageChange = (e) => {
+        setNewImage(URL.createObjectURL(e.target.files[0]));
+    };
 
     return (
         <div>
-            <label type="text" onClick={""}>
-                
-                <center>WELCOME TO MANGO TWEET</center><br></br>
-                What is MANGO tWEET actually used for?
-                 Twitter is a service for friends, family,
-                          and coworkers to communicate and stay 
-                              connected through the exchange of quick,
-                          frequent messages. People post Tweets,
-                 which may contain photos, videos, links, 
-                      and text. These messages are posted to your profile,
-                             sent to your followers, and are searchable MANGO TWEET on search.
+            <label type="text" onClick={() => navigate("/Home")}>
+                <h2 class="fs-1"> MANGO TWEET</h2>
             </label>
-        
-            <div className="sign-up">
-                        
-                        <button 
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={onSignIn}
-                        >
-                            Log Out
-                        </button>
-</div>
-        </div>
-    );
+            <form onSubmit={handlePost}>
+                <input class="post.placeholder"
+                    type="text"
+                    placeholder="Write a post"
+                    value={newPost}
+                    onChange={(e) => setNewPost(e.target.value)}
+                />
+                <input type="file" onChange={handleImageChange}/>
+                <button type="submit" class="btn btn-primary">Post</button>
 
+            </form>
+            {posts.map((post) => (
+                <div key={post.post}>
+                    <p>{post.post}</p>
+                    <img src={post.image} alt="Post Image" style={{width: "100%", height: "auto"}}/>
+                    <button onClick={() => handleLike(post)} class="btn btn-primary">
+                                 {post.likes} Likes
+                   </button>
+
+                    <form onSubmit={(e) => handleComment(e, post)}>
+                        <input
+                            type="text"
+                            placeholder="Write a comment"
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                        />
+                       <button type="submit" class="btn btn-primary">Comment</button>
+
+                    </form>
+                    {post.comments.map((comment) => (
+                        <p key={comment}>{comment}</p>
+                    ))}
+                </div>
+                
+            ))}
+</div>
+    );
 }
 
-
-
-export default Home;
-
+export default Home

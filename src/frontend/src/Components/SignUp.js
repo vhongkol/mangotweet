@@ -1,42 +1,105 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
-const SignUp = () => {
+const SignUp =  () => {
     const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [userID, setUserID] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPass, setConfirmPass] = useState("");
-    const [fname, setFname] = useState("");
-    const [lname, setLname] = useState("");
+    const [confirm_password, setConfirm_Password] = useState("");
+    const [address, setAddress] = useState("");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
 
 
+        
+    const onSignUp = async (e) => {
+    
+        
+        console.log("sending data");
+        
+        console.log(name);
+        console.log(username);
+        console.log(password);
+        console.log(confirm_password);
+        console.log(address);
+        console.log(first_name);
+        console.log(last_name);
 
-    const onCreate = async (e) => {
-        if (
-            email != "" &&
-            userID != "" &&
-            password != "" &&
-            confirmPass != "" &&
-            fname != "" &&
-            lname != ""
-            
-        ) {
-            // navigate("/sign-in");
-            alert("success");
-        } else {
-            alert("Please fillout.");
-        }
-    };
+        let URL = "http://localhost/api/v1/register";
+      const response = await axios.post('http://localhost/api/v1/register',  {
+        name: name,  
+        username: username,   
+        first_name: first_name,
+        last_name: last_name,
+        address: address,
+        email: email,       
+        password: password,
+        confirm_password: confirm_password,
+       
+        }, {}).then(function(Response) {
+            console.log( Response.data)
+         navigate('/sign-up');
+        })
+        .catch(function(error) {
+            console.log( error)
+            // console.log(error)
+        });
+
+   // navigate("/");
+
+};
+       
+
+   
     const handleChange = async (e) => {};
     const onSignIn = () => {
         navigate("/sign-in");
     };
+    const onNameChange = async (e) => {
+        console.log(e.target.value);
+        setName(e.target.value);
+      };
+    const onEmailChange = async (e) => {
+        console.log(e.target.value);
+        setEmail(e.target.value);
+      };
+      const onUsernameChange = async (e) => {
+        console.log(e.target.value);
+        setUsername(e.target.value);
+      }; const onPasswordChange = async (e) => {
+        console.log(e.target.value);
+        setPassword(e.target.value);
+      };
+      const onConfirm_Password = async (e) => {
+        console.log(e.target.value);
+        setConfirm_Password(e.target.value);
+      };
+      const onAddressChange = async (e) => {
+        console.log(e.target.value);
+        setAddress(e.target.value);
+      };
+      const onFirst_nameChange = async (e) => {
+        console.log(e.target.value);
+        setFirst_name(e.target.value);
+      };
+      const onLast_nameChange = async (e) => {
+        console.log(e.target.value);
+        setLast_name(e.target.value);
+      };
+
+
+    
     return (
         <div className="container-md">
             <div className="row m-3 justify-content-center">
                 <h1 className="text-center my-5">SIGN UP</h1>
             </div>
+
+           
+            
             <div className="row m-3 justify-content-center">
                 <div className="col-sm-6">
                     <div className=" mb-3">
@@ -44,18 +107,30 @@ const SignUp = () => {
                         <input
                             type="email"
                             className="form-control"
-                            placeholder="Your@email.com"
+                            placeholder="Email Address"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
+                        <label>Name</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            placeholder="Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="mb-3">
                         <label>Username</label>
                         <input
                             type="email"
                             className="form-control"
-                            value={userID}
-                            onChange={(e) => setUserID(e.target.value)}
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
@@ -63,6 +138,7 @@ const SignUp = () => {
                         <input
                             type="password"
                             className="form-control"
+                            placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -72,17 +148,32 @@ const SignUp = () => {
                         <input
                             type="password"
                             className="form-control"
-                            value={confirmPass}
-                            onChange={(e) => setConfirmPass(e.target.value)}
+                            placeholder="Confirm Password"
+                            value={confirm_password}
+                            onChange={(e) => setConfirm_Password(e.target.value)}
                         />
                     </div>
+
+                    <div className="mb-3">
+                        <label>Address</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            placeholder="Address"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
+
+
                     <div className="mb-3">
                         <label>First Name</label>
                         <input
                             type="email"
                             className="form-control"
-                            value={fname}
-                            onChange={(e) => setFname(e.target.value)}
+                            placeholder="First Name"
+                            value={first_name}
+                            onChange={(e) => setFirst_name(e.target.value)}
                         />
                     </div>
 
@@ -91,13 +182,14 @@ const SignUp = () => {
                         <input
                             type="email"
                             className="form-control"
-                            value={lname}
-                            onChange={(e) => setLname(e.target.value)}
+                            placeholder="Last Name"
+                            value={last_name}
+                            onChange={(e) => setLast_name(e.target.value)}
                         />
 
                        
 
-                    </div><center>
+</div><center>
                     <div className="radio">
                     <div class="form-check form-check-inline">
                         <input
@@ -122,31 +214,39 @@ const SignUp = () => {
                         <label class="form-check-label" for="exampleRadios1">
                             Female
                         </label>
+                        
                     </div>
                     </div></center>
-                    <div className="row mb-3 px-3">
+                   <center> <div className="row mb-3 px-3">
                         <input
                             type="submit"
-                            onClick={onCreate}
+                            onClick={onSignUp}
                             className="btn btn-primary"
                             value="Create Account"
+
                             id="female"
                         />
-                    </div>
-                    <div className="sign-up">
-                        <label>Already have an Account?</label>{" "}
+                    </div></center>
+                    <div className="sign-in">
+                        
                         <label
                             type="button"
                             className="text-decoration-underline"
                             onClick={onSignIn}
                         >
-                            Sign In
+                           Sign In 
                         </label>
+                        </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                    </div>
+               
+          
     );
+    
 };
+
+
+
 
 export default SignUp;

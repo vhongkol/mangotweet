@@ -1,68 +1,48 @@
-import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-
-
-
+import axios from 'axios';
 
 
 function Home() {
 
-    const [Task,setTask] =useState("")
-    const [Time,setTime] =useState("")
-    const [Tasklist,setTasklist] =useState([])
-
-    const addTask =() =>{
-        setTasklist([...Tasklist,{Task:Task,Time:Time}])
-        setTask()
-        setTime('')
-
-
-    }
-
-
-    /*const navigate = useNavigate();
-
-    const onSignOut = async (e) => {
-
-        navigate("/sign-in");*/
-
-    
+    const navigate = useNavigate();
+    const onSignIn = async (e) => {
+        navigate("/sign-in");   
+    };
+    let URL = "http://localhost/api/v1/logout";
+    const response =  axios.post('http://localhost/api/v1/logout', )
 
     return (
-        <div >
-            
-
-
-<center><h1>Welcome to Mango Tweet</h1>
-<label>Task</label><br></br>
-<input type="text" id="Task" onChange={(e)=> {
-    setTask(e.target.value)
-}}/>
-
-<br></br>
-<label>Time</label><br></br>
-<input type="text" id="Time"onChange={(e)=> {
-    setTime(e.target.value)
-
-}}/>
-<br></br>
-
-<button onClick={"addTask"}>Add</button>
-
-
-{Tasklist.map((Task)=> {
-    return <Task Task={Task.Task} Time={Task.Time}/>
-})}
-</center>
-
-
-
+        <div>
+            <label type="text" onClick={""}>
+                
+                <center>WELCOME TO MANGO TWEET</center><br></br>
+                What is MANGO tWEET actually used for?
+                 Twitter is a service for friends, family,
+                          and coworkers to communicate and stay 
+                              connected through the exchange of quick,
+                          frequent messages. People post Tweets,
+                 which may contain photos, videos, links, 
+                      and text. These messages are posted to your profile,
+                             sent to your followers, and are searchable MANGO TWEET on search.
+            </label>
+        
+            <div className="sign-up">
+                        
+                        <button 
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={onSignIn}
+                        >
+                            Log Out
+                        </button>
 </div>
+        </div>
+    );
 
-);
-};
-                    
+}
 
 
 
 export default Home;
+

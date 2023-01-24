@@ -12,14 +12,90 @@ const SignUp =  () => {
     const [address, setAddress] = useState("");
     const [first_name, setFirst_name] = useState("");
     const [last_name, setLast_name] = useState("");
+    const [formErrors, setFormErrors] = useState({});
 
 
-        
-    const onSignUp = async (e) => {
+    
     
         
-        console.log("sending data");
+    const onSignUp = async (e) => {
+        e.preventDefault();
+    
+        // reset form errors
+        setFormErrors({});
+    
+        // validate form inputs
+        if (!name) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                name: "Name is required"
+            }));
+        }
+        if (!username) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                username: "Username is required"
+            }));
+        }
+        if (!first_name) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                first_name: "First Name is required"
+            }));
+        }
+        if (!last_name) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                last_name: "Last Name is required"
+            }));
+        }
+        if (!address) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                address: "Address is required"
+            }));
+        }
+        if (!email) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                email: "Email is required"
+            }));
+        } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                email: "Invalid email address"
+            }));
         
+        }
+        if (!password) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                password: "Password is required"
+            }));
+        } else if (password.length < 8) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                password: "Password must be at least 8 characters long"
+            }));
+        }
+        if (!confirm_password) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                confirm_password: "Confirm Password is required"
+            }));
+        }
+        if (password !== confirm_password) {
+            setFormErrors((prevState) => ({
+                ...prevState,
+                confirm_password: "Passwords do not match"
+            }));
+        }
+        if (Object.keys(formErrors).length) {
+            return;
+        }
+    
+        // form is valid, proceed with making the request to the server
+        console.log("sending data");
         console.log(name);
         console.log(username);
         console.log(password);
@@ -27,6 +103,9 @@ const SignUp =  () => {
         console.log(address);
         console.log(first_name);
         console.log(last_name);
+    
+       
+    
 
         let URL = "http://localhost/api/v1/register";
       const response = await axios.post('http://localhost/api/v1/register',  {
@@ -90,6 +169,11 @@ const SignUp =  () => {
         setLast_name(e.target.value);
       };
 
+      const onFormErrorsChange = async (e) => {
+        console.log(e.target.value);
+        setFormErrors(e.target.value);
+      };
+
 
     
     return (
@@ -101,9 +185,10 @@ const SignUp =  () => {
            
             
             <div className="row m-3 justify-content-center">
-                <div className="col-sm-6">
+                <div className="col-sm-10">
                     <div className=" mb-3">
-                        <label>Email Address</label>
+
+                    {formErrors.email && <span className="text-danger">{formErrors.email}</span>} 
                         <input
                             type="email"
                             className="form-control"
@@ -111,9 +196,12 @@ const SignUp =  () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
+                       
                     </div>
                     <div className="mb-3">
-                        <label>Name</label>
+                
+                       
+                        {formErrors.name && <span className="text-danger">{formErrors.name}</span>}
                         <input
                             type="email"
                             className="form-control"
@@ -124,7 +212,7 @@ const SignUp =  () => {
                     </div>
 
                     <div className="mb-3">
-                        <label>Username</label>
+                    {formErrors.username && <span className="text-danger">{formErrors.username}</span>}
                         <input
                             type="email"
                             className="form-control"
@@ -134,7 +222,7 @@ const SignUp =  () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label>Password</label>
+                    {formErrors.password && <span className="text-danger">{formErrors.password}</span>}
                         <input
                             type="password"
                             className="form-control"
@@ -144,7 +232,7 @@ const SignUp =  () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label>Confirm Password</label>
+                    {formErrors.confirm_password && <span className="text-danger">{formErrors.confirm_password}</span>}
                         <input
                             type="password"
                             className="form-control"
@@ -155,7 +243,7 @@ const SignUp =  () => {
                     </div>
 
                     <div className="mb-3">
-                        <label>Address</label>
+                    {formErrors.address && <span className="text-danger">{formErrors.address}</span>}
                         <input
                             type="email"
                             className="form-control"
@@ -167,7 +255,7 @@ const SignUp =  () => {
 
 
                     <div className="mb-3">
-                        <label>First Name</label>
+                    {formErrors.first_name && <span className="text-danger">{formErrors.first_name}</span>}
                         <input
                             type="email"
                             className="form-control"
@@ -178,7 +266,7 @@ const SignUp =  () => {
                     </div>
 
                     <div className="mb-3">
-                        <label>Last Name</label>
+                    {formErrors.last_name && <span className="text-danger">{formErrors.last_name}</span>}
                         <input
                             type="email"
                             className="form-control"
@@ -214,10 +302,22 @@ const SignUp =  () => {
                         <label class="form-check-label" for="exampleRadios1">
                             Female
                         </label>
-                        
+                        </div>
                     </div>
-                    </div></center>
-                   <center> <div className="row mb-3 px-3">
+                </center>
+                     <div class="col-12 d-flex justify-content-center">
+                       <div class="form-check"> 
+                            <input class="form-check-input"
+                                type="checkbox"
+                                  value="" 
+                                    id="invalidCheck" 
+                                         required>
+                                    </input>
+                            <label class="form-check-label" for="invalidCheck">
+                     <center>Agree to terms and conditions</center>
+            </label><br></br>  
+                
+                 <div className="row mb-3 px-3">
                         <input
                             type="submit"
                             onClick={onSignUp}
@@ -226,12 +326,14 @@ const SignUp =  () => {
 
                             id="female"
                         />
-                    </div></center>
+                    </div>
                     <div className="sign-in">
                         
                         
                         </div>
                         </div>
+                    </div>
+                    </div>
                     </div>
                     </div>
                

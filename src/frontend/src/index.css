@@ -23,8 +23,7 @@ html, body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  align-items: center;
-  justify-content: center;
+ 
   
 
 
@@ -89,7 +88,7 @@ h1{
 
 .form-control{
   background-color: antiquewhite;
-  width: 12rem;
+  width: 100%;
   
 }
 
@@ -112,6 +111,9 @@ h1{
   font-style: italic;
 }
 
+.text-danger {
+  font-weight: bold;
+}
 
 
 

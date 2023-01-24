@@ -14,9 +14,12 @@ const SignIn = () => {
        
         if (!email.includes("@")) {
             setError('Email must include an @');
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-            setError('Incorrect password');}
-        
+            
+        } else if (password.length < 8) {
+            setError('Incorrect Password');}
+
+           
+
         else {
             // Send request to server
             let URL = "http://localhost/api/v1/login";
@@ -51,10 +54,13 @@ const SignIn = () => {
         <div className="container-md">
             <div className="row m-3 justify-content-center">
                 <h1 className="text-center my-5">SIGN IN</h1>
+                   <center> {error && <p className="text-danger">{error}</p>}</center>
+                   
             </div>
             <div className="row m-3 justify-content-center">
-                <div className="col-sm-6">
+                <div className="col-sm-10">
                     <div className="form-floating mb-3">
+                    
                         <input
                             type="email"
                             className="form-control"
@@ -62,9 +68,11 @@ const SignIn = () => {
                             placeholder="Email address" 
                             onChange={onEmailChange} required 
                         />
+                        
                         <label for="floatingInput">Email Address</label>
                     </div>
                     <div className="form-floating mb-3">
+                   
                         <input
                             type="password"
                             className="form-control"
@@ -82,7 +90,6 @@ const SignIn = () => {
                             value="Login"
                         />
                     </div>
-                    {error && <p className="text-danger">{error}</p>}
 
                     <div className="sign-up">
                         <label>Don't have Account?</label>{" "}

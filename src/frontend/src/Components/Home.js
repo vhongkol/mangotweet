@@ -7,6 +7,8 @@ function Home() {
     const [newPost, setNewPost] = useState("");
     const [newComment, setNewComment] = useState("");
     const [newImage, setNewImage] = useState(null);
+   
+
 
     const handlePost = (e) => {
         e.preventDefault();
@@ -45,23 +47,34 @@ function Home() {
     const handleImageChange = (e) => {
         setNewImage(URL.createObjectURL(e.target.files[0]));
     };
-
+    const handleLogout = () => {
+        // Clear the user's data from localStorage or other storage you used
+        localStorage.removeItem("username");
+        // redirect the user to the login page
+        navigate("/sign-in");
+    }
+    
     return (
         <div>
             <label type="text" onClick={() => navigate("/Home")}>
                 <h2 class="fs-1"> MANGO TWEET</h2>
             </label>
-            <form onSubmit={handlePost}>
-                <input class="post.placeholder"
-                    type="text"
-                    placeholder="Write a post"
-                    value={newPost}
-                    onChange={(e) => setNewPost(e.target.value)}
-                />
-                <input type="file" onChange={handleImageChange}/>
-                <button type="submit" class="btn btn-primary">Post</button>
+            <div style={{float: "right"}}>
+            <button className="btn btn-danger" onClick={handleLogout}>Log Out</button>
+    </div>
 
-            </form>
+            <form onSubmit={handlePost}>
+   
+    <input 
+        class="post.placeholder"
+        type="text"
+        placeholder="Write a Mango Tweet"
+        value={newPost}
+        onChange={(e) => setNewPost(e.target.value)}
+    />
+    <input type="file" onChange={handleImageChange}/>
+    <button type="submit" class="btn btn-primary">Post</button>
+</form>
             {posts.map((post) => (
                 <div key={post.post}>
                     <p>{post.post}</p>

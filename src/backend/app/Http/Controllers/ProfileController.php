@@ -22,10 +22,9 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-       /* $request->validate([
-            'name' => 'required|string|max:150',
-            'first_name' => 'required'
-        ]);*/
+       $request->validate([
+            'name' => 'required|string|max:150'
+        ]);
 
         $user = $request->user();
 
